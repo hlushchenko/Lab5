@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 
 namespace Lab5
 {
@@ -6,7 +7,12 @@ namespace Lab5
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            Hashtable a = new Hashtable();
+            VariableNode b = new VariableNode("abc", null, a);
+            VariableNode c = new VariableNode("ak", b, a);
+            c.Value = 12f;
+            Console.WriteLine(c.Value);
+
         }
     }
 }
