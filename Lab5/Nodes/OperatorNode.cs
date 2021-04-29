@@ -31,5 +31,26 @@
             _children[1] = right;
             right.Parent = this;
         }
+
+        public override double Value
+        {
+            get
+            {
+                switch (Operation)
+                {
+                    case OperationType.Sum:
+                        return _children[0].Value + _children[1].Value;
+                    case OperationType.Division:
+                        return _children[0].Value / _children[1].Value;
+                    case OperationType.Multiplication:
+                        return _children[0].Value * _children[1].Value;
+                    case OperationType.Subtraction:
+                        return _children[0].Value - _children[1].Value;
+                }
+
+                return 0;
+            }
+            set => throw new System.NotImplementedException();
+        }
     }
 }

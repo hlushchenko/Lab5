@@ -2,7 +2,7 @@
 {
     public abstract class Node
     {
-        public double Value { get; set;}
+        public abstract double Value { get; set;}
         public Node Parent;
         public abstract NodeType GetNodeType();
     }

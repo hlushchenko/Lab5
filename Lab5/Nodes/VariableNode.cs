@@ -15,14 +15,19 @@ namespace Lab5
             Name = name;
             Parent = parent;
             Ht = ht;
-            ht.Add(name, 0f);
+            if (!ht.ContainsKey(name))
+            {
+                Ht.Add(name, 0f);
+            }
         }
-
-        private new double Value
+        
+        public override double Value
         {
             get => Convert.ToDouble(Ht[Name]);
-            set => Ht[Name] = value;
+            set
+            {
+                Ht[Name] = value;
+            }
         }
-
     }
 }
