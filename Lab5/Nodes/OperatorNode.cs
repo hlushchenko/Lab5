@@ -11,7 +11,8 @@
             Sum,
             Multiplication,
             Division,
-            Subtraction
+            Subtraction,
+            Assign
         }
         public OperatorNode(OperationType operation, Node parent)
         {
@@ -46,7 +47,13 @@
                         return _children[0].Value * _children[1].Value;
                     case OperationType.Subtraction:
                         return _children[0].Value - _children[1].Value;
-                }
+                    case OperationType.Assign:
+                        if (_children[0].GetNodeType() == NodeType.Variable)
+                        {
+                            _children[0].Value = _children[1].Value;
+                        }
+                        break;
+                    }
 
                 return 0;
             }
