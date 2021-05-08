@@ -14,13 +14,24 @@ namespace Lab5
             Stack<char> resultStack = new Stack<char>();
             for (int i = 0; i < task.Length; i++)
             {
-                if (IsNumber(task[i])) resultStack.Push(task[i]);
+                if (task[i] == '(')
+                    tempStack.Push(task[i]);
+                else if (task[i] == ')')
+                {
+                    while (tempStack.Peek() != '(')
+                        resultStack.Push(tempStack.Pop());
+                    tempStack.Pop();
+                }
+                if (IsNumber(task[i])) 
+                    resultStack.Push(task[i]);
                 else if (IsOperator(task[i]))
                 {
-                    while(tempStack.Count > 0 && Priority(task[i]) <= Priority(tempStack.Peek())) resultStack.Push(tempStack.Pop());
+                    while(tempStack.Count > 0 && tempStack.Peek() != '(' && Priority(task[i]) <= Priority(tempStack.Peek())) 
+                        resultStack.Push(tempStack.Pop());
                     tempStack.Push(task[i]);
                 }
-                
+                else if(tempStack.Peek() != '(')
+                    resultStack.Push(tempStack.Pop());
             }
             while (tempStack.Count > 0) resultStack.Push(tempStack.Pop());
             return resultStack;
