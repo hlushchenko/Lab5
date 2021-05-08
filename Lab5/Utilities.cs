@@ -15,9 +15,10 @@ namespace Lab5
             for (int i = 0; i < task.Length; i++)
             {
                 if (IsNumber(task[i])) resultStack.Push(task[i]);
-                else if ()
+                else if (IsOperator(task[i])) tempStack.Push(task[i]);
             }
-            return null;
+            while (tempStack.Count > 0) resultStack.Push(tempStack.Pop());
+            return resultStack;
         }
 
         private static bool IsNumber(char a) => a >= '0' && a <= '9';
