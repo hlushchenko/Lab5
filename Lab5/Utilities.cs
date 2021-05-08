@@ -14,11 +14,14 @@ namespace Lab5
             Stack<char> resultStack = new Stack<char>();
             for (int i = 0; i < task.Length; i++)
             {
-
+                if (IsNumber(task[i])) resultStack.Push(task[i]);
+                else if ()
             }
             return null;
         }
 
         private static bool IsNumber(char a) => a >= '0' && a <= '9';
+
+        private static bool IsOperator(char a) => a == '+' || a == '-' || a == '*' || a == '/';
     }
 }
