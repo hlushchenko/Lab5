@@ -18,15 +18,15 @@ namespace Lab5
                     tempStack.Push(task[i]);
                 else if (task[i] == ')')
                 {
-                    while (tempStack.Peek() != '(')
+                    while (tempStack.Count > 0 && tempStack.Peek() != '(')
                         resultStack.Push(tempStack.Pop());
                     tempStack.Pop();
                 }
-                if (IsNumber(task[i])) 
+                else if (IsNumber(task[i]))
                     resultStack.Push(task[i]);
                 else if (IsOperator(task[i]))
                 {
-                    while(tempStack.Count > 0 && tempStack.Peek() != '(' && Priority(task[i]) <= Priority(tempStack.Peek())) 
+                    while (tempStack.Count > 0 && tempStack.Peek() != '(' && Priority(task[i]) <= Priority(tempStack.Peek()))
                         resultStack.Push(tempStack.Pop());
                     tempStack.Push(task[i]);
                 }
