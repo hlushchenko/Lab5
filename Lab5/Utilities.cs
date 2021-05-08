@@ -17,6 +17,7 @@ namespace Lab5
                 if (IsNumber(task[i])) resultStack.Push(task[i]);
                 else if (IsOperator(task[i]))
                 {
+                    while(tempStack.Count > 0 && Priority(task[i]) <= Priority(tempStack.Peek())) resultStack.Push(tempStack.Pop());
                     tempStack.Push(task[i]);
                 }
                 
