@@ -22,11 +22,15 @@ namespace Lab5
             multNode.AddLeftOperand(const13);
             multNode.AddRightOperand(const5);
             sumNode.AddLeftOperand(const12);*/
-            
-            string[] arr = { "a=1", "b=5", "a+b", "a=2", "a*b"};
+
+            /*            string temp = "(15+17)*21,23";
+                        Tree.FormatString(ref temp);
+                        Stack<string> test = Tree.Parse(temp);*/
+            string[] arr = { "ab=15", "bc=2", "(ab-5)" };
+            //string[] arr = { "15*20" };
             Tree tree = new Tree(arr);
             tree.PrintResult();
- 
+
         }
     }
 }

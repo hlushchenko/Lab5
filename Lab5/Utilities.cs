@@ -17,11 +17,12 @@ namespace Lab5
             Root = new RootNode();
             foreach (var str in input)
             {
-                //StackToTree(Parse(str));
+                string formatedString = FormatString(str);
+                StackToTree(Parse(formatedString));
             }
         }
 
-        public static void FormatString(ref string task)
+        public static string FormatString(string task)
         {
             task = task.Replace(" ", "");
             string[] operators = { "+", "-", "*", "/", "=", "(", ")" };
@@ -29,6 +30,8 @@ namespace Lab5
             {
                 task = task.Replace(singleOperator, $" {singleOperator} ");
             }
+            while (task.Contains("  ")) task = task.Replace("  ", " ");
+            return task;
         }
 
         public static Stack<string> Parse(string task)
@@ -61,41 +64,12 @@ namespace Lab5
             return reversedStack;
         }
 
-       /* public static Stack<char> Parse(string task)
-        {
-            Stack<char> tempStack = new Stack<char>();
-            Stack<char> reversedStack = new Stack<char>();
-            for (int i = 0; i < task.Length; i++)
-            {
-                if (task[i] == '(')
-                    tempStack.Push(task[i]);
-                else if (task[i] == ')')
-                {
-                    while (tempStack.Count > 0 && tempStack.Peek() != '(')
-                        reversedStack.Push(tempStack.Pop());
-                    tempStack.Pop();
-                }
-                else if (IsNumber(task[i]) || IsVar(task[i]))
-                    reversedStack.Push(task[i]);
-                else if (IsOperator(task[i]))
-                {
-                    while (tempStack.Count > 0 && tempStack.Peek() != '(' && Priority(task[i]) <= Priority(tempStack.Peek()))
-                        reversedStack.Push(tempStack.Pop());
-                    tempStack.Push(task[i]);
-                }
-                else if(tempStack.Peek() != '(')
-                    reversedStack.Push(tempStack.Pop());
-            }
-            while (tempStack.Count > 0) reversedStack.Push(tempStack.Pop());
-            return reversedStack;
-        }*/
-
-        public void StackToTree(Stack<char> stack)
-        {   //5 6 - 7 *
+        public void StackToTree(Stack<string> stack)
+        {   
             Node cursor = Root;
             while (stack.Count > 0)
             {
-                /*if (IsOperator(stack.Peek()))
+                if (IsOperator(stack.Peek()))
                 {
                     Node newNode = AddOperator(stack, cursor);
                     cursor.AddChild(newNode);
@@ -110,18 +84,18 @@ namespace Lab5
                 {
                     Node newNode = AddVar(stack, cursor, _variables);
                     cursor.AddChild(newNode);
-                }*/
+                }
                 while (cursor.IsFull && cursor.Parent != null) cursor = cursor.Parent;
             }
         }
         
-        private static VariableNode AddVar(Stack<char> stack, Node node, Hashtable ht) => new VariableNode((stack.Pop()).ToString(), node, ht);
+        private static VariableNode AddVar(Stack<string> stack, Node node, Hashtable ht) => new VariableNode(stack.Pop(), node, ht);
 
-        private static ConstantNode AddNum(Stack<char> stack, Node node) => new ConstantNode(stack.Pop() - '0', node);
+        private static ConstantNode AddNum(Stack<string> stack, Node node) => new ConstantNode(Convert.ToDouble(stack.Pop()), node);
 
-        private static OperatorNode AddOperator(Stack<char> stack, Node root)
+        private static OperatorNode AddOperator(Stack<string> stack, Node root)
         {
-            switch (stack.Pop())
+            switch (stack.Pop()[0])
             {
                 case '+':
                     return new OperatorNode(OperatorNode.OperationType.Sum, root);
