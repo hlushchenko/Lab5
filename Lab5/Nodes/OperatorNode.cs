@@ -21,6 +21,13 @@
             Parent = parent;
         }
 
+        public OperatorNode(OperationType operation)
+        {
+            _children = new Node[2];
+            Operation = operation;
+            Parent = null;
+        }
+
         public void AddLeftOperand(Node left)
         {
             _children[0] = left;
