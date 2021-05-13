@@ -52,7 +52,6 @@ namespace Lab5
 
         public void StackToTree(Stack<char> stack)
         {   //5 6 - 7 *
-            Hashtable ht = new Hashtable();
             Node cursor = Root;
             while (stack.Count > 0)
             {
@@ -69,7 +68,7 @@ namespace Lab5
                 }
                 else if (IsVar(stack.Peek()))
                 {
-                    Node newNode = AddVar(stack, cursor, ht);
+                    Node newNode = AddVar(stack, cursor, _variables);
                     cursor.AddChild(newNode);
                 }
                 while (cursor.IsFull && cursor.Parent != null) cursor = cursor.Parent;

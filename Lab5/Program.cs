@@ -23,7 +23,7 @@ namespace Lab5
             multNode.AddRightOperand(const5);
             sumNode.AddLeftOperand(const12);*/
             
-            string[] arr = { "12+12" };
+            string[] arr = { "a=1", "b=5", "a+b", "a=2", "a*b"};
             Tree tree = new Tree(arr);
             tree.PrintResult();
  
