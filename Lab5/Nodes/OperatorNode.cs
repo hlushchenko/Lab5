@@ -4,6 +4,17 @@ namespace Lab5
 {
     public class OperatorNode : Node
     {
+        private OperationType Operation { get; }
+        private Node[] _children;
+        
+        public enum OperationType
+        {
+            Sum,
+            Multiplication,
+            Division,
+            Subtraction,
+            Assign
+        }
         public override NodeType GetNodeType()
         {
             if (Operation == OperationType.Assign)
@@ -14,18 +25,6 @@ namespace Lab5
             {
                 return NodeType.Operator;
             }
-        }
-
-        private OperationType Operation { get; }
-        private Node[] _children;
-
-        public enum OperationType
-        {
-            Sum,
-            Multiplication,
-            Division,
-            Subtraction,
-            Assign
         }
         public OperatorNode(OperationType operation, Node parent)
         {
@@ -77,13 +76,13 @@ namespace Lab5
                 switch (Operation)
                 {
                     case OperationType.Sum:
-                        return _children[0].Value + _children[1].Value;
+                        return _children[1].Value + _children[0].Value;
                     case OperationType.Division:
-                        return _children[0].Value / _children[1].Value;
+                        return _children[1].Value / _children[0].Value;
                     case OperationType.Multiplication:
-                        return _children[0].Value * _children[1].Value;
+                        return _children[1].Value * _children[0].Value;
                     case OperationType.Subtraction:
-                        return _children[0].Value - _children[1].Value;
+                        return _children[1].Value - _children[0].Value;
                     case OperationType.Assign:
                         if (_children[1].GetNodeType() == NodeType.Variable)
                         {
@@ -93,7 +92,7 @@ namespace Lab5
                 }
                 return 0;
             }
-            set => throw new System.NotImplementedException();
+            set => throw new Exception();
         }
     }
 }

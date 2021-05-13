@@ -26,7 +26,8 @@ namespace Lab5
                 }
                 return value;
             }
-            set => throw new NotImplementedException(); }
+            set => throw new Exception();
+        }
         public override NodeType GetNodeType() => NodeType.Root;
 
         public string[] Result()

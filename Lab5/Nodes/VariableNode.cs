@@ -8,27 +8,24 @@ namespace Lab5
         public override NodeType GetNodeType() => NodeType.Variable;
         
         public string Name;
-        public Hashtable Ht;
+        private Hashtable _variables;
 
-        public VariableNode(string name, Node parent, Hashtable ht)
+        public VariableNode(string name, Node parent, Hashtable variables)
         {
             IsFull = true;
             Name = name;
             Parent = parent;
-            Ht = ht;
-            if (!ht.ContainsKey(name))
+            _variables = variables;
+            if (!variables.ContainsKey(name))
             {
-                Ht.Add(name, 0f);
+                _variables.Add(name, 0f);
             }
         }
         
         public override double Value
         {
-            get => Convert.ToDouble(Ht[Name]);
-            set
-            {
-                Ht[Name] = value;
-            }
+            get => Convert.ToDouble(_variables[Name]);
+            set => _variables[Name] = value;
         }
     }
 }
