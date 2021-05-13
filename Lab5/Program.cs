@@ -23,8 +23,9 @@ namespace Lab5
             multNode.AddRightOperand(const5);
             sumNode.AddLeftOperand(const12);*/
 
-            string task = "a*(4+3)";
+            string task = "(5-6)*7";
             Stack<char> poland = Utilities.Parse(task);
+            OperatorNode test = Utilities.StackToTree(poland);
             Console.ReadKey();
         }
     }

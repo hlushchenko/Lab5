@@ -35,43 +35,42 @@ namespace Lab5
                     reversedStack.Push(tempStack.Pop());
             }
             while (tempStack.Count > 0) reversedStack.Push(tempStack.Pop());
-            while (reversedStack.Count > 0) resultStack.Push(reversedStack.Pop());
-            return resultStack;
+            //while (reversedStack.Count > 0) resultStack.Push(reversedStack.Pop());
+            return reversedStack;
         }
 
         public static OperatorNode StackToTree(Stack<char> stack)
-        {
-            OperatorNode on = new OperatorNode(OperatorNode.OperationType.Assign);
+        {   //5 6 - 7 *
+            OperatorNode on = null;
             while (stack.Count > 0)
             {
                 if (IsOperator(stack.Peek()))
-                    AddChild(on, stack);
-                if (IsNumber(stack.Peek()))
-                    AddChild(on, stack);
+                {
+                    on = AddOperator(stack);
+                }     
             }
-            
-            return null;
+            return on;
         }
 
-        private static void AddChild(OperatorNode on, Stack<char> stack)
+        private static void AddNum(OperatorNode on, Stack<char> stack)
+        {
+
+        }
+
+        private static OperatorNode AddOperator(Stack<char> stack)
         {
             switch (stack.Pop())
             {
                 case '+':
-                    on = new OperatorNode(OperatorNode.OperationType.Sum);
-                    break;
+                    return new OperatorNode(OperatorNode.OperationType.Sum);
                 case '-':
-                    on = new OperatorNode(OperatorNode.OperationType.Subtraction);
-                    break;
+                    return new OperatorNode(OperatorNode.OperationType.Subtraction);
                 case '*':
-                    on = new OperatorNode(OperatorNode.OperationType.Multiplication);
-                    break;
+                    return new OperatorNode(OperatorNode.OperationType.Multiplication);
                 case '/':
-                    on = new OperatorNode(OperatorNode.OperationType.Division);
-                    break;
+                    return new OperatorNode(OperatorNode.OperationType.Division);
                 default:
-                    on = new OperatorNode(OperatorNode.OperationType.Assign);
-                    break;
+                    return new OperatorNode(OperatorNode.OperationType.Assign);
             }
         }
 
