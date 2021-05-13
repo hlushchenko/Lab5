@@ -11,18 +11,20 @@ namespace Lab5
     {
         private Hashtable _variables;
         public Node Root;
-        public Tree(string input)
+        public Tree(string[] input)
         {
             _variables = new Hashtable();
             Root = new RootNode();
-            StackToTree(Parse(input));
+            foreach (var str in input)
+            {
+                StackToTree(Parse(str));
+            }
         }
 
         public static Stack<char> Parse(string task)
         {
             Stack<char> tempStack = new Stack<char>();
             Stack<char> reversedStack = new Stack<char>();
-            Stack<char> resultStack = new Stack<char>();
             for (int i = 0; i < task.Length; i++)
             {
                 if (task[i] == '(')
@@ -45,12 +47,12 @@ namespace Lab5
                     reversedStack.Push(tempStack.Pop());
             }
             while (tempStack.Count > 0) reversedStack.Push(tempStack.Pop());
-            //while (reversedStack.Count > 0) resultStack.Push(reversedStack.Pop());
             return reversedStack;
         }
 
         public void StackToTree(Stack<char> stack)
         {   //5 6 - 7 *
+            Hashtable ht = new Hashtable();
             Node cursor = Root;
             while (stack.Count > 0)
             {
@@ -65,9 +67,16 @@ namespace Lab5
                     Node newNode = AddNum(stack, cursor);
                     cursor.AddChild(newNode);
                 }
+                else if (IsVar(stack.Peek()))
+                {
+                    Node newNode = AddVar(stack, cursor, ht);
+                    cursor.AddChild(newNode);
+                }
                 while (cursor.IsFull && cursor.Parent != null) cursor = cursor.Parent;
             }
         }
+
+        private static VariableNode AddVar(Stack<char> stack, Node node, Hashtable ht) => new VariableNode((stack.Pop()).ToString(), node, ht);
 
         private static ConstantNode AddNum(Stack<char> stack, Node node) => new ConstantNode(stack.Pop() - '0', node);
 
@@ -92,7 +101,7 @@ namespace Lab5
 
         private static bool IsVar(char a) => (a >= 'a' && a <= 'z') || (a >= 'A' && a <= 'Z');
 
-        private static bool IsOperator(char a) => a == '+' || a == '-' || a == '*' || a == '/';
+        private static bool IsOperator(char a) => a == '+' || a == '-' || a == '*' || a == '/' || a == '=';
 
         private static int Priority(char a)
         {
@@ -100,16 +109,18 @@ namespace Lab5
             {
                 switch (a)
                 {
+                    case '=':
+                        return 0;
                     case '+':
                         return 1;
                     case '-':
-                        return 1;
+                        return 2;
                     case '*':
-                        return 2;
-                    case '/':
-                        return 2;
-                    default:
                         return 3;
+                    case '/':
+                        return 3;
+                    default:
+                        return 4;
                 }
             }
             else

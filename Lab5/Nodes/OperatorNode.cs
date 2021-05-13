@@ -74,11 +74,11 @@ namespace Lab5
                     case OperationType.Subtraction:
                         return _children[0].Value - _children[1].Value;
                     case OperationType.Assign:
-                        if (_children[0].GetNodeType() == NodeType.Variable)
+                        if (_children[1].GetNodeType() == NodeType.Variable)
                         {
-                            _children[0].Value = _children[1].Value;
+                            _children[1].Value = _children[0].Value;
                         }
-                        return _children[0].Value;
+                        return _children[1].Value;
                 }
                 return 0;
             }
