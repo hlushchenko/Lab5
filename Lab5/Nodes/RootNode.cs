@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 
 namespace Lab5
 {
@@ -35,7 +34,11 @@ namespace Lab5
             List<String> result = new List<string>();
             foreach (var child in _children)
             {
-               result.Add(child.Value.ToString(CultureInfo.InvariantCulture));
+                double res = child.Value;
+                if (child.GetNodeType() != NodeType.Assign)
+                {
+                    result.Add(res.ToString());
+                }
             }
 
             return result.ToArray();

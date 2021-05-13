@@ -6,6 +6,7 @@
         Variable,
         Operator,
         Constant,
-        Root
+        Root,
+        Assign
     }
 }

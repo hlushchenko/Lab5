@@ -74,7 +74,7 @@ namespace Lab5
                 while (cursor.IsFull && cursor.Parent != null) cursor = cursor.Parent;
             }
         }
-
+        
         private static VariableNode AddVar(Stack<char> stack, Node node, Hashtable ht) => new VariableNode((stack.Pop()).ToString(), node, ht);
 
         private static ConstantNode AddNum(Stack<char> stack, Node node) => new ConstantNode(stack.Pop() - '0', node);

@@ -4,7 +4,18 @@ namespace Lab5
 {
     public class OperatorNode : Node
     {
-        public override NodeType GetNodeType() => NodeType.Operator;
+        public override NodeType GetNodeType()
+        {
+            if (Operation == OperationType.Assign)
+            {
+                return NodeType.Assign;
+            }
+            else
+            {
+                return NodeType.Operator;
+            }
+        }
+
         private OperationType Operation { get; }
         private Node[] _children;
 
