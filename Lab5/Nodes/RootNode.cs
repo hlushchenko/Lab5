@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 
 namespace Lab5
 {
@@ -28,5 +29,16 @@ namespace Lab5
             }
             set => throw new NotImplementedException(); }
         public override NodeType GetNodeType() => NodeType.Root;
+
+        public string[] Result()
+        {
+            List<String> result = new List<string>();
+            foreach (var child in _children)
+            {
+               result.Add(child.Value.ToString(CultureInfo.InvariantCulture));
+            }
+
+            return result.ToArray();
+        }
     }
 }

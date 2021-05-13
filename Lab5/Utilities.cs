@@ -10,7 +10,7 @@ namespace Lab5
     class Tree
     {
         private Hashtable _variables;
-        public Node Root;
+        public RootNode Root;
         public Tree(string[] input)
         {
             _variables = new Hashtable();
@@ -94,6 +94,14 @@ namespace Lab5
                     return new OperatorNode(OperatorNode.OperationType.Division, root);
                 default:
                     return new OperatorNode(OperatorNode.OperationType.Assign, root);
+            }
+        }
+
+        public void PrintResult()
+        {
+            foreach (var res in Root.Result())
+            {
+                Console.WriteLine(res);
             }
         }
 
