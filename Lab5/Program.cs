@@ -23,10 +23,11 @@ namespace Lab5
             multNode.AddRightOperand(const5);
             sumNode.AddLeftOperand(const12);*/
 
-            string task = "2+2*2";
+            string task = "(1+2)*3";
             Stack<char> poland = Utilities.Parse(task);
             RootNode root = Utilities.StackToTree(poland);
-            Console.ReadKey();
+            Console.WriteLine(root.Value);
+           // Console.ReadKey();
             //-+222
         }
     }

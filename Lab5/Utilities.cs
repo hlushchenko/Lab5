@@ -50,13 +50,13 @@ namespace Lab5
             {
                 if (IsOperator(stack.Peek()))
                 {
-                    Node newNode = AddOperator(stack, root);
+                    Node newNode = AddOperator(stack, cursor);
                     cursor.AddChild(newNode);
                     cursor = newNode;
                 }
                 else if (IsNumber(stack.Peek()))
                 {
-                    Node newNode = AddNum(stack, root);
+                    Node newNode = AddNum(stack, cursor);
                     cursor.AddChild(newNode);
                 }
                 while (cursor.IsFull && cursor.Parent != null) cursor = cursor.Parent;
@@ -66,7 +66,7 @@ namespace Lab5
 
         private static ConstantNode AddNum(Stack<char> stack, Node node) => new ConstantNode(stack.Pop() - '0', node);
 
-        private static OperatorNode AddOperator(Stack<char> stack, RootNode root)
+        private static OperatorNode AddOperator(Stack<char> stack, Node root)
         {
             switch (stack.Pop())
             {
