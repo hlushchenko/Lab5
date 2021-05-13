@@ -1,4 +1,6 @@
-﻿namespace Lab5
+﻿using System;
+
+namespace Lab5
 {
     public class OperatorNode : Node
     {
@@ -31,6 +33,23 @@
         {
             _children[1] = right;
             right.Parent = this;
+            IsFull = true;
+        }
+
+        public void AddChild(Node newNode)
+        {
+            if (!IsFull)
+            {
+                if (_children[0] == null)
+                {
+                    _children[0] = newNode;
+                }
+                else
+                {
+                    _children[1] = newNode;
+                    IsFull = true;
+                }
+            }
         }
 
         public override double Value
@@ -52,9 +71,8 @@
                         {
                             _children[0].Value = _children[1].Value;
                         }
-                        break;
-                    }
-
+                        return _children[0].Value;
+                }
                 return 0;
             }
             set => throw new System.NotImplementedException();

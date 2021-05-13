@@ -5,5 +5,6 @@
         public abstract double Value { get; set;}
         public Node Parent;
         public abstract NodeType GetNodeType();
+        public bool IsFull;
     }
 }

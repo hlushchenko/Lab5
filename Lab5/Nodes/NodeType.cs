@@ -5,6 +5,7 @@
         Basic,
         Variable,
         Operator,
-        Constant
+        Constant,
+        Root
     }
 }
