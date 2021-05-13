@@ -39,38 +39,47 @@ namespace Lab5
             return reversedStack;
         }
 
-        public static OperatorNode StackToTree(Stack<char> stack)
+        public static RootNode StackToTree(Stack<char> stack)
         {   //5 6 - 7 *
-            OperatorNode on = null;
+
+
+            //2 2 2 * +
+            RootNode root = new RootNode();
+            Node cursor = root;
             while (stack.Count > 0)
             {
                 if (IsOperator(stack.Peek()))
                 {
-                    on = AddOperator(stack);
-                }     
+                    Node newNode = AddOperator(stack, root);
+                    cursor.AddChild(newNode);
+                    cursor = newNode;
+                }
+                else if (IsNumber(stack.Peek()))
+                {
+                    Node newNode = AddNum(stack, root);
+                    cursor.AddChild(newNode);
+                }
+                while (cursor.IsFull && cursor.Parent != null) cursor = cursor.Parent;
             }
-            return on;
+            return root;
         }
 
-        private static void AddNum(OperatorNode on, Stack<char> stack)
-        {
+        private static ConstantNode AddNum(Stack<char> stack, Node node) => new ConstantNode(stack.Pop() - '0', node);
 
-        }
-
-        private static OperatorNode AddOperator(Stack<char> stack)
+        private static OperatorNode AddOperator(Stack<char> stack, RootNode root)
         {
             switch (stack.Pop())
             {
                 case '+':
-                    return new OperatorNode(OperatorNode.OperationType.Sum);
+                    return new OperatorNode(OperatorNode.OperationType.Sum, root);
                 case '-':
-                    return new OperatorNode(OperatorNode.OperationType.Subtraction);
+                    return new OperatorNode(OperatorNode.OperationType.Subtraction, root);
                 case '*':
-                    return new OperatorNode(OperatorNode.OperationType.Multiplication);
+                    return new OperatorNode(OperatorNode.OperationType.Multiplication, root);
                 case '/':
-                    return new OperatorNode(OperatorNode.OperationType.Division);
+                    return new OperatorNode(OperatorNode.OperationType.Division, root);
                 default:
-                    return new OperatorNode(OperatorNode.OperationType.Assign);
+                    return new OperatorNode(OperatorNode.OperationType.Assign, root);
             }
         }
 

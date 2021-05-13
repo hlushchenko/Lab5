@@ -6,5 +6,9 @@
         public Node Parent;
         public abstract NodeType GetNodeType();
         public bool IsFull;
+        public virtual void AddChild(Node node)
+        {
+
+        }
     }
 }

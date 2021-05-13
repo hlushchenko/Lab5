@@ -12,7 +12,7 @@ namespace Lab5
             _children = new List<Node>();
         }
 
-        public void AddChild(Node newNode) 
+        public override void AddChild(Node newNode) 
         {
             _children.Add(newNode);
         }

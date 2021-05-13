@@ -43,7 +43,7 @@ namespace Lab5
             IsFull = true;
         }
 
-        public void AddChild(Node newNode)
+        public override void AddChild(Node newNode)
         {
             if (!IsFull)
             {
