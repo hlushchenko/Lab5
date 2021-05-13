@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,8 +7,17 @@ using System.Threading.Tasks;
 
 namespace Lab5
 {
-    class Utilities
+    class Tree
     {
+        private Hashtable _variables;
+        public Node Root;
+        public Tree(string input)
+        {
+            _variables = new Hashtable();
+            Root = new RootNode();
+            StackToTree(Parse(input));
+        }
+
         public static Stack<char> Parse(string task)
         {
             Stack<char> tempStack = new Stack<char>();
@@ -39,13 +49,9 @@ namespace Lab5
             return reversedStack;
         }
 
-        public static RootNode StackToTree(Stack<char> stack)
+        public void StackToTree(Stack<char> stack)
         {   //5 6 - 7 *
-
-
-            //2 2 2 * +
-            RootNode root = new RootNode();
-            Node cursor = root;
+            Node cursor = Root;
             while (stack.Count > 0)
             {
                 if (IsOperator(stack.Peek()))
@@ -61,7 +67,6 @@ namespace Lab5
                 }
                 while (cursor.IsFull && cursor.Parent != null) cursor = cursor.Parent;
             }
-            return root;
         }
 
         private static ConstantNode AddNum(Stack<char> stack, Node node) => new ConstantNode(stack.Pop() - '0', node);
