@@ -17,11 +17,51 @@ namespace Lab5
             Root = new RootNode();
             foreach (var str in input)
             {
-                StackToTree(Parse(str));
+                //StackToTree(Parse(str));
             }
         }
 
-        public static Stack<char> Parse(string task)
+        public static void FormatString(ref string task)
+        {
+            task = task.Replace(" ", "");
+            string[] operators = { "+", "-", "*", "/", "=", "(", ")" };
+            foreach (var singleOperator in operators)
+            {
+                task = task.Replace(singleOperator, $" {singleOperator} ");
+            }
+        }
+
+        public static Stack<string> Parse(string task)
+        {
+            string[] tokens = task.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+            Stack<string> tempStack = new Stack<string>();
+            Stack<string> reversedStack = new Stack<string>();
+            for (int i = 0; i < tokens.Length; i++)
+            {
+                if (tokens[i] == "(")
+                    tempStack.Push(tokens[i]);
+                else if (tokens[i] == ")")
+                {
+                    while (tempStack.Count > 0 && tempStack.Peek() != "(")
+                        reversedStack.Push(tempStack.Pop());
+                    tempStack.Pop();
+                }
+                else if (IsNumber(tokens[i]) || IsVar(tokens[i]))
+                    reversedStack.Push(tokens[i]);
+                else if (IsOperator(tokens[i]))
+                {
+                    while (tempStack.Count > 0 && tempStack.Peek() != "(" && Priority(tokens[i]) <= Priority(tempStack.Peek()))
+                        reversedStack.Push(tempStack.Pop());
+                    tempStack.Push(tokens[i]);
+                }
+                else if (tempStack.Peek() != "(")
+                    reversedStack.Push(tempStack.Pop());
+            }
+            while (tempStack.Count > 0) reversedStack.Push(tempStack.Pop());
+            return reversedStack;
+        }
+
+       /* public static Stack<char> Parse(string task)
         {
             Stack<char> tempStack = new Stack<char>();
             Stack<char> reversedStack = new Stack<char>();
@@ -48,14 +88,14 @@ namespace Lab5
             }
             while (tempStack.Count > 0) reversedStack.Push(tempStack.Pop());
             return reversedStack;
-        }
+        }*/
 
         public void StackToTree(Stack<char> stack)
         {   //5 6 - 7 *
             Node cursor = Root;
             while (stack.Count > 0)
             {
-                if (IsOperator(stack.Peek()))
+                /*if (IsOperator(stack.Peek()))
                 {
                     Node newNode = AddOperator(stack, cursor);
                     cursor.AddChild(newNode);
@@ -70,7 +110,7 @@ namespace Lab5
                 {
                     Node newNode = AddVar(stack, cursor, _variables);
                     cursor.AddChild(newNode);
-                }
+                }*/
                 while (cursor.IsFull && cursor.Parent != null) cursor = cursor.Parent;
             }
         }
@@ -104,17 +144,33 @@ namespace Lab5
             }
         }
 
-        private static bool IsNumber(char a) => a >= '0' && a <= '9';
+        private static bool IsNumber(string a)
+        {
+            if (double.TryParse(a, out _))
+                return true;
+            else
+                return false;
+        }
 
-        private static bool IsVar(char a) => (a >= 'a' && a <= 'z') || (a >= 'A' && a <= 'Z');
+        private static bool IsLetter(char a) => (a >= 'a' && a <= 'z') || (a >= 'A' && a <= 'Z');
 
-        private static bool IsOperator(char a) => a == '+' || a == '-' || a == '*' || a == '/' || a == '=';
+        private static bool IsVar(string a)
+        {
+            char[] symbols = a.ToCharArray();
+            foreach (var symbol in symbols)
+            {
+                if (!IsLetter(symbol)) return false;
+            }
+            return true;
+        }
 
-        private static int Priority(char a)
+        private static bool IsOperator(string a) => a == "+" || a == "-" || a == "*" || a == "/" || a == "=";
+
+        private static int Priority(string a)
         {
             if (IsOperator(a))
             {
-                switch (a)
+                switch (a[0])
                 {
                     case '=':
                         return 0;
