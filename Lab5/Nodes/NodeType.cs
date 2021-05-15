@@ -7,6 +7,7 @@
         Operator,
         Constant,
         Root,
-        Assign
+        Assign, 
+        Conditional
     }
 }
