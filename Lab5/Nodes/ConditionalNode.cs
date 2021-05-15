@@ -16,7 +16,7 @@ namespace Lab5
 
         public override void AddChild(Node node)
         {
-            if (IsFull)
+            if (!IsFull)
             {
                 int current = 0;
                 while (_children[current] != null)

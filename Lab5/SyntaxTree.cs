@@ -71,7 +71,14 @@ namespace Lab5
             Node cursor = Root;
             while (stack.Count > 0)
             {
-                if (IsOperator(stack.Peek()))
+                if (stack.Peek() == "?")
+                {
+                    Node newNode = AddTernary(cursor);
+                    cursor.AddChild(newNode);
+                    cursor = newNode;
+                    stack.Pop();
+                }
+                else if (IsOperator(stack.Peek()))
                 {
                     Node newNode = AddOperator(stack, cursor);
                     cursor.AddChild(newNode);
@@ -90,7 +97,9 @@ namespace Lab5
                 while (cursor.IsFull && cursor.Parent != null) cursor = cursor.Parent;
             }
         }
-        
+
+        private static ConditionalNode AddTernary(Node node) => new ConditionalNode(node);
+
         private static VariableNode AddVar(Stack<string> stack, Node node, Hashtable ht) => new VariableNode(stack.Pop(), node, ht);
 
         private static ConstantNode AddNum(Stack<string> stack, Node node) => new ConstantNode(Convert.ToDouble(stack.Pop()), node);
