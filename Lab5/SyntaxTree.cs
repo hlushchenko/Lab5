@@ -27,7 +27,7 @@ namespace Lab5
         public static string FormatString(string task)
         {
             task = task.Replace(" ", "");
-            string[] operators = { "+", "-", "*", "/", "=", "(", ")" };
+            string[] operators = { "+", "-", "*", "/", "=", "(", ")", "?", ":" };
             foreach (var singleOperator in operators)
             {
                 task = task.Replace(singleOperator, $" {singleOperator} ");
@@ -138,7 +138,7 @@ namespace Lab5
             return true;
         }
 
-        private static bool IsOperator(string a) => a == "+" || a == "-" || a == "*" || a == "/" || a == "=";
+        private static bool IsOperator(string a) => a == "+" || a == "-" || a == "*" || a == "/" || a == "=" || a == ":" || a == "?";
 
         private static int Priority(string a)
         {
@@ -147,17 +147,21 @@ namespace Lab5
                 switch (a[0])
                 {
                     case '=':
+                        return -1;
+                    case '?':
                         return 0;
-                    case '+':
+                    case ':':
                         return 1;
-                    case '-':
+                    case '+':
                         return 2;
+                    case '-':
+                        return 3;
                     case '*':
-                        return 3;
-                    case '/':
-                        return 3;
-                    default:
                         return 4;
+                    case '/':
+                        return 4;
+                    default:
+                        return 5;
                 }
             }
             return 0;
