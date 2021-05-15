@@ -1,13 +1,18 @@
-﻿namespace Lab5
+﻿using System.Collections.Generic;
+
+namespace Lab5
 {
     class Program
     {
         static void Main(string[] args)
         {
-            CodeFileReader codeFile = new CodeFileReader(args[0]);
+            string temp = "x= a? b:c";
+            string temp2 = SyntaxTree.FormatString(temp);
+            Stack<string> a = SyntaxTree.Parse(temp2);
+            /*CodeFileReader codeFile = new CodeFileReader(args[0]);
             SyntaxTree syntaxTree = new SyntaxTree();
             syntaxTree.AddFromStringArray(codeFile.Read());
-            syntaxTree.PrintResult();
+            syntaxTree.PrintResult();*/
         }
     }
 }
